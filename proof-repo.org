@@ -1,0 +1,59 @@
+#+Title: Proof repository for CS4th3/6tc3
+#+Author: Mark Armstrong
+#+Description: A repository of proofs for Dr. Jeffery Zucker's
+#+Description: computability theory course.
+
+* Introduction
+
+These proofs were both in my capacity as the teaching assistant for the course,
+and for my own interest (in the case of the calculational style proofs).
+
+Proofs for the questions assigned as homework are not stored here.
+They are available for current students of the course
+upon request, after the completion of the homework.
+
+* Lemma 1.2
+* Corollary 1.3 – Equinumerosity is an equivalence relation on the universe of sets
+
+** (b) ~A ≈ B ⇒ B ≈ A~
+
+*** Calculational proof
+
+In this proof, I use the ~Assuming witness x satisfying P~ form
+for proving a statement of the form ~(∃ x • P) ⇒ Q~.
+Note there is a proviso that ~x~ not occur in ~Q~.
+
+#+begin_src text
+    A ≈ B ⇒ B ≈ A
+  ≡⟨ Definition of ≈, page 1-3 ⟩
+    (∃ f : A → B • “f is bijective”) ⇒ ∃ g : B → A • “g is bijective”
+  Proof for this:
+    Assuming witness f satisfying “f is bijective”:
+        true
+      ≡⟨ Assumption “f is bijective” ⟩
+        “f is bijective”
+      ≡⟨ Corollary 1.5(c), page 1-7 (reworded) ⟩   -- We are instructed to use this fact.
+        ∃ g : B → A • “g is a 2-sided inverse of f”
+      ≡⟨ Definition of 2-sided inverse, page 1-5 ⟩
+        ∃ g : B → A • “g is a left inverse of f” ∧ “g is a right inverse of f”
+      ≡⟨ “Note. g is a left inverse of f ⇔ f is a right inverse of g” page 1-5 ⟩
+        ∃ g : B ⇒ A • “f is a right inverse of g” ∧ “f is a left inverse of f”
+      ≡⟨ Symmetry of ∧, Definition of 2-sided inverse ⟩
+        ∃ g : B ⇒ A • “g has a 2-sided inverse f”
+      ≡⟨ Corollary 1.5(c) ⟩
+        ∃ g : B → A • “g is bijective”   -- This is our local goal.
+#+end_src
+
+*** Non-calculational proof
+
+Assume $A ≈ B$. This is equivalent to
+$∃ f : A → B • “f is bijective”$, by definition of $≈$.
+
+Then, by Corollary 1.5(c), $f$ has a two-sided inverse $g : B → A$.
+
+Since $g$ is a two-sided inverse, it is also true that
+$f$ is a two-sided inverse of $g$.
+
+Then by Corollary 1.5(c) (in the $⇐$ direction),
+$g : B → A$ is a bijection.
+This means $g : B ≈ A$, and so $B ≈ A$.
