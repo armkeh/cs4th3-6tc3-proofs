@@ -2,22 +2,57 @@
 #+Author: Mark Armstrong
 #+Description: A repository of proofs for Dr. Jeffery Zucker's
 #+Description: computability theory course.
+#+SETUPFILE: ./org-html-themes/setup/theme-readtheorg-local.setup
 
 * Introduction
+:PROPERTIES:
+:CUSTOM_ID: Introduction
+:END:
 
 These proofs were both in my capacity as the teaching assistant for the course,
 and for my own interest (in the case of the calculational style proofs).
+
+Calculational proofs are written in the style used by
+[[http://calccheck.mcmaster.ca/][the CalcCheck proof checker]],
+which in turn uses Gries and Schneider's calculation style
+from “A Logical Approach to Discrete Math”.
+Refer to the
+[[http://calccheck.mcmaster.ca/CalcCheckDoc/][CalcCheck Documentation]]
+for the comprehensive theorem list I make use of, along with the
+syntax hints which provide some of the forms of proof I use.
+
+Non-calculational proofs are presented in a more
+“written reasoning” style.
 
 Proofs for the questions assigned as homework are not stored here.
 They are available for current students of the course
 upon request, after the completion of the homework.
 
-* Lemma 1.2
-* Corollary 1.3 – Equinumerosity is an equivalence relation on the universe of sets
+* Section 1 – Introduction; Mathematical Preliminaries
+:PROPERTIES:
+:CUSTOM_ID: Section-1-–-Introduction;-Mathematical-Preliminaries
+:END:
+** Lemma 1.2
+:PROPERTIES:
+:CUSTOM_ID: Lemma-1.2
+:END:
 
-** (b) ~A ≈ B ⇒ B ≈ A~
+:TODO:
 
-*** Calculational proof
+** Corollary 1.3 – Equinumerosity is an equivalence relation on the universe of sets
+:PROPERTIES:
+:CUSTOM_ID: Corollary-1.3-–-Equinumerosity-is-an-equivalence-relation-on-the-universe-of-sets
+:END:
+
+*** (b) ~A ≈ B ⇒ B ≈ A~
+:PROPERTIES:
+:CUSTOM_ID: (b)-~A-≈-B-⇒-B-≈-A~
+:END:
+
+**** Calculational proof
+:PROPERTIES:
+:CUSTOM_ID: Calculational-proof
+:END:
 
 In this proof, I use the ~Assuming witness x satisfying P~ form
 for proving a statement of the form ~(∃ x • P) ⇒ Q~.
@@ -44,10 +79,13 @@ Note there is a proviso that ~x~ not occur in ~Q~.
         ∃ g : B → A • “g is bijective”   -- This is our local goal.
 #+end_src
 
-*** Non-calculational proof
+**** Non-calculational proof
+:PROPERTIES:
+:CUSTOM_ID: Non-calculational-proof
+:END:
 
 Assume $A ≈ B$. This is equivalent to
-$∃ f : A → B • “f is bijective”$, by definition of $≈$.
+$∃ f : A → B • \text{“f is bijective”}$, by definition of $≈$.
 
 Then, by Corollary 1.5(c), $f$ has a two-sided inverse $g : B → A$.
 
