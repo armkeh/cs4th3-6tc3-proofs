@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-15 Tue 01:40 -->
+<!-- 2020-10-31 Sat 19:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proof repository for CS4th3/6tc3</title>
@@ -202,6 +202,7 @@ computability theory course."
 <script type="text/javascript" src="styles/lib/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
 <script type="text/javascript" src="styles/readtheorg/js/readtheorg.js"></script>
+<style>pre.src{background:#000000;color:white;} </style>
 <script type="text/javascript">
 // @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
@@ -265,6 +266,11 @@ computability theory course."
 </li>
 </ul>
 </li>
+<li><a href="#Section-5-–-Some-techniques-for-defining-primitive-recursive-functions">3. Section 5 – Some techniques for defining primitive recursive functions</a>
+<ul>
+<li><a href="#Greatest-common-denomicator-(~gcd~)">3.1. Greatest common denomicator (<code>gcd</code>)</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -282,6 +288,10 @@ Calculational proofs are written in the style used by
 <a href="http://calccheck.mcmaster.ca/">the CalcCheck proof checker</a>,
 which in turn uses Gries and Schneider's calculation style
 from “A Logical Approach to Discrete Math”.
+Refer to the
+<a href="http://calccheck.mcmaster.ca/CalcCheckDoc/">CalcCheck Documentation</a>
+for the comprehensive theorem list I make use of, along with the
+syntax hints which provide some of the forms of proof I use.
 </p>
 
 <p>
@@ -380,14 +390,44 @@ This means \(g : B ≈ A\), and so \(B ≈ A\).
 </div>
 </div>
 </div>
+
+<div id="outline-container-Section-5-–-Some-techniques-for-defining-primitive-recursive-functions" class="outline-2">
+<h2 id="Section-5-–-Some-techniques-for-defining-primitive-recursive-functions"><span class="section-number-2">3</span> Section 5 – Some techniques for defining primitive recursive functions</h2>
+<div class="outline-text-2" id="text-Section-5-–-Some-techniques-for-defining-primitive-recursive-functions">
+</div>
+
+<div id="outline-container-Greatest-common-denomicator-(~gcd~)" class="outline-3">
+<h3 id="Greatest-common-denomicator-(~gcd~)"><span class="section-number-3">3.1</span> Greatest common denomicator (<code>gcd</code>)</h3>
+<div class="outline-text-3" id="text-Greatest-common-denomicator-(~gcd~)">
+<p>
+One approach to defining <code>gcd</code> is to make use of the
+bounded minimalisation and existential quantifiers.
+</p>
+<div class="org-src-container">
+<pre class="src src-text">gcd<span style="color: #00cd68;">(</span>x,y<span style="color: #00cd68;">)</span> = &#956; <span style="color: #00cd68;">(</span>z &#8804; x<span style="color: #00cd68;">)</span> &#8226; <span style="color: #00cd68;">(</span>z | x &#8743; z | y &#8743; &#172; <span style="color: #b6a0ff;">(</span>&#8707; <span style="color: #6ae4b9;">(</span>z&#8242; &#8804; x<span style="color: #6ae4b9;">)</span> &#8226; z&#8242; | x &#8743; z&#8242; | y &#8743; z &lt; z&#8242;<span style="color: #b6a0ff;">)</span><span style="color: #00cd68;">)</span>
+</pre>
+</div>
+<p>
+this reads “the least <code>z ≤ x</code> such that <code>z</code> divides both <code>x</code> and <code>y</code>, and there is not
+a greater <code>z′ ≤ x</code> which also divides both <code>x</code> and <code>y</code>”.
+</p>
+
+<p>
+Note that the choice of <code>x</code> as a bound for both quantifiers is arbitrary.
+We can see easily that the GCD of <code>x</code> and <code>y</code> must be less than or equal
+to both of them. So we could instead use <code>y</code>, and also <code>min(x,y)</code>.
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Mark Armstrong</p>
      <p class="author">Contact: <a href="mailto:markparmstrong@gmail.com">markparmstrong@gmail.com</a></p>
      <p class="date">Original date: </p>
-     <p class="date">Last updated: 2020-09-15 Tue 01:40</p>
-     <p class="creator">Created using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.0.90 (<a href="https://orgmode.org">Org</a> mode 9.3.8)</p>
-     <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+     <p class="date">Last updated: 2020-10-31 Sat 19:45</p>
+     <p class="creator">Created using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.0.90 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
+     <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
 </html>

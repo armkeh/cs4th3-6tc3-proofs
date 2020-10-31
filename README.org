@@ -1,0 +1,8 @@
+#+Title: Proof repository for CS4th3/6tc3
+#+Author: Mark Armstrong
+#+Description: A repository of proofs for Dr. Jeffery Zucker's
+#+Description: computability theory course.
+
+See the [[https://armkeh.github.io/cs4th3-6tc3-proofs][github.io]] site for this repository.
+
+#+Include: "./index.org::*Introduction" 

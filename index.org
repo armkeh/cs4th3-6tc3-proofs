@@ -95,3 +95,26 @@ $f$ is a two-sided inverse of $g$.
 Then by Corollary 1.5(c) (in the $⇐$ direction),
 $g : B → A$ is a bijection.
 This means $g : B ≈ A$, and so $B ≈ A$.
+
+* Section 5 – Some techniques for defining primitive recursive functions
+:PROPERTIES:
+:CUSTOM_ID: Section-5-–-Some-techniques-for-defining-primitive-recursive-functions
+:END:
+
+** Greatest common denomicator (~gcd~)
+:PROPERTIES:
+:CUSTOM_ID: Greatest-common-denomicator-(~gcd~)
+:END:
+
+One approach to defining ~gcd~ is to make use of the
+bounded minimalisation and existential quantifiers.
+#+begin_src text
+gcd(x,y) = μ (z ≤ x) • (z | x ∧ z | y ∧ ¬ (∃ (z′ ≤ x) • z′ | x ∧ z′ | y ∧ z < z′))
+#+end_src
+this reads “the least ~z ≤ x~ such that ~z~ divides both ~x~ and ~y~, and there is not
+a greater ~z′ ≤ x~ which also divides both ~x~ and ~y~”.
+
+Note that the choice of ~x~ as a bound for both quantifiers is arbitrary.
+We can see easily that the GCD of ~x~ and ~y~ must be less than or equal
+to both of them. So we could instead use ~y~, and also ~min(x,y)~.
+
