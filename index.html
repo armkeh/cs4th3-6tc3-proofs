@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-31 Sat 19:45 -->
+<!-- 2020-12-17 Thu 13:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Proof repository for CS4th3/6tc3</title>
@@ -271,6 +271,22 @@ computability theory course."
 <li><a href="#Greatest-common-denomicator-(~gcd~)">3.1. Greatest common denomicator (<code>gcd</code>)</a></li>
 </ul>
 </li>
+<li><a href="#Exam-review">4. Exam review</a>
+<ul>
+<li><a href="#Find-an-$e$-such-that-$Wₑ-=-\{-e-\}$">4.1. Find an \(e\) such that \(Wₑ = \{ e \}\)</a></li>
+<li><a href="#Co-semicomputability">4.2. Co-semicomputability</a>
+<ul>
+<li><a href="#Show-that-/comp/-is-closed-under-union-and-intersection">4.2.1. Show that <i>comp</i> is closed under union and intersection</a></li>
+<li><a href="#Is-/s/comp/-closed-under-complementation?">4.2.2. Is <i>s/comp</i> closed under complementation?</a></li>
+<li><a href="#Is-/co-s/comp/-closed-under-complementation?">4.2.3. Is <i>co-s/comp</i> closed under complementation?</a></li>
+<li><a href="#Is-/comp/-a-subset-of-/co-s/comp/?">4.2.4. Is <i>comp</i> a subset of <i>co-s/comp</i>?</a></li>
+<li><a href="#Is-/comp/-a-/proper/-subset-of-/co-s/comp/?">4.2.5. Is <i>comp</i> a <i>proper</i> subset of <i>co-s/comp</i>?</a></li>
+<li><a href="#Is-/s/comp/-a-subset-of-/co-s/comp/?">4.2.6. Is <i>s/comp</i> a subset of <i>co-s/comp</i>?</a></li>
+<li><a href="#Is-/co-s/comp/-countable?">4.2.7. Is <i>co-s/comp</i> countable?</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -400,6 +416,10 @@ This means \(g : B ≈ A\), and so \(B ≈ A\).
 <h3 id="Greatest-common-denomicator-(~gcd~)"><span class="section-number-3">3.1</span> Greatest common denomicator (<code>gcd</code>)</h3>
 <div class="outline-text-3" id="text-Greatest-common-denomicator-(~gcd~)">
 <p>
+(Exercise 1(e) from page 5-12 of the notes.)
+</p>
+
+<p>
 One approach to defining <code>gcd</code> is to make use of the
 bounded minimalisation and existential quantifiers.
 </p>
@@ -420,12 +440,377 @@ to both of them. So we could instead use <code>y</code>, and also <code>min(x,y)
 </div>
 </div>
 </div>
+
+<div id="outline-container-Exam-review" class="outline-2">
+<h2 id="Exam-review"><span class="section-number-2">4</span> Exam review</h2>
+<div class="outline-text-2" id="text-Exam-review">
+<p>
+Two problems were discussed during the exam review session;
+they are repeated here with solutions.
+</p>
+</div>
+
+<div id="outline-container-Find-an-$e$-such-that-$Wₑ-=-\{-e-\}$" class="outline-3">
+<h3 id="Find-an-$e$-such-that-$Wₑ-=-\{-e-\}$"><span class="section-number-3">4.1</span> Find an \(e\) such that \(Wₑ = \{ e \}\)</h3>
+<div class="outline-text-3" id="text-Find-an-$e$-such-that-$Wₑ-=-\{-e-\}$">
+<p>
+Recall from notes page 8-3 that we write \(Wₙ\) to denote
+the <i>halting set</i> of the (𝒢-)program with index \(n\).
+I.e., \(Wₙ = dom(φₙ)\).
+</p>
+
+<p>
+So, if we are tasked to find an \(e\) such that \(Wₑ = \{ e \}\),
+this means we must find \(e\) such that \(φₑ(x) ↓ ⇔ e = x\).
+</p>
+
+<p>
+Conceivably, we could guess values for \(e\) until we happen to find one,
+but this is obviously not a feasible approach.
+</p>
+
+<p>
+Notice that if we were able to treat <code>e</code> as an input
+to the computable function, and able to define the function as we want,
+this problem would be quite trivial,
+since we can check equality between numbers.
+</p>
+
+<p>
+Thankfully, we can use Kleene's Recursion Theorem (page 13-1)
+to do precisely this; RT tells us that for any binary computable \(g\),
+there is an \(e\) such that for all \(x\),
+</p>
+<div class="org-center">
+<p>
+φₑ(x) ≃ g(x,e)
+</p>
+</div>
+<p>
+(the Recursion Theorem works for functions of any arity;
+here we use it on a binary function.)
+</p>
+
+<p>
+Note that when using the Recursion Theorem, we are free to pick
+fill in any function for \(g\); we have complete freedom
+to define the function, so long as it is computable.
+</p>
+
+<p>
+Let \(f\) be the function such that
+</p>
+<ul class="org-ul">
+<li>\(f(x,y) = 0\) if \(x = y\), and</li>
+<li>\(f(x,y)↑\) otherwise.</li>
+</ul>
+<p>
+Then by RT, there exists an \(e\) such that \(φₑ(x) ≃ f(x,e)\),
+i.e.,
+</p>
+<ul class="org-ul">
+<li>\(φₑ(x) = 0\) if \(x = e\), and</li>
+<li>\(φₑ(x)↑\) otherwise.</li>
+</ul>
+<p>
+From this, we see that \(Wₑ = \{ e \}\). So we have found an \(e\)
+as requested.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Co-semicomputability" class="outline-3">
+<h3 id="Co-semicomputability"><span class="section-number-3">4.2</span> Co-semicomputability</h3>
+<div class="outline-text-3" id="text-Co-semicomputability">
+<p>
+Consider the following definition and questions.
+</p>
+<blockquote>
+<p>
+A subset of ℕ is said to be <i>co-semicomputable</i> if
+its complement is semicomputable.
+</p>
+
+<p>
+Let <i>comp</i>, <i>s/comp</i> and <i>co-s/comp</i> be
+the collections of all 𝒢-computable sets
+𝒢-semicomputable sets and 𝒢-co-semicomputable sets
+respectively.
+</p>
+<ol class="org-ol">
+<li>Show that <i>comp</i> is closed under union and intersection.</li>
+<li>Is <i>s/comp</i> closed under complementation?</li>
+<li>Is <i>co-s/comp</i> closed under complementation?</li>
+<li>Is <i>comp</i> a subset of <i>co-s/comp</i>?</li>
+<li>Is <i>comp a /proper</i> subset of <i>co-s/comp</i>?</li>
+<li>Is <i>s/comp</i> a subset of <i>co-s/comp</i>?</li>
+<li>Is <i>co-s/comp</i> countable?</li>
+</ol>
+<p>
+Justify all of your answers,
+by giving either proofs or counterexamples.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-Show-that-/comp/-is-closed-under-union-and-intersection" class="outline-4">
+<h4 id="Show-that-/comp/-is-closed-under-union-and-intersection"><span class="section-number-4">4.2.1</span> Show that <i>comp</i> is closed under union and intersection</h4>
+<div class="outline-text-4" id="text-Show-that-/comp/-is-closed-under-union-and-intersection">
+<p>
+Assume that sets \(A\) and \(B\) are computable.
+We must show that \(A ∪ B\) and \(A ∩ B\) are also computable.
+</p>
+
+<p>
+We <i>could</i> assume that we have 𝒢-programs to compute \(A\) and \(B\),
+and then construct 𝒢-programs for \(A ∪ B\) and \(A ∩ B\).
+</p>
+
+<p>
+More easily, we can describe the algorithms, and invoke
+the Church-Turing Thesis to argue that we could construct 𝒢-programs.
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="The-union-algorithm"></a>The union algorithm<br />
+<div class="outline-text-5" id="text-The-union-algorithm">
+<p>
+For input \(x\):
+</p>
+<ul class="org-ul">
+<li>Check if \(x ∈ A\). (This check is computable by assumption.)
+<ul class="org-ul">
+<li>If so, return true.</li>
+<li>Otherwise, continue.</li>
+</ul></li>
+<li>Check if \(x ∈ B\). (This check is computable by assumption.)
+<ul class="org-ul">
+<li>If so, return true.</li>
+<li>Otherwise, return false.</li>
+</ul></li>
+</ul>
+
+<p>
+So, by CT, if \(A\) and \(B\) are computable, so is \(A ∪ B\).
+</p>
+</div>
+</li>
+
+<li><a id="The-intersection-algorithm"></a>The intersection algorithm<br />
+<div class="outline-text-5" id="text-The-intersection-algorithm">
+<p>
+For input \(x\):
+</p>
+<ul class="org-ul">
+<li>Check if \(x ∈ A\). (This check is computable by assumption.)
+<ul class="org-ul">
+<li>If not, return false.</li>
+<li>Otherwise, continue.</li>
+</ul></li>
+<li>Check if \(x ∈ B\). (This check is computable by assumption.)
+<ul class="org-ul">
+<li>If not, return false.</li>
+<li>Otherwise, return true.</li>
+</ul></li>
+</ul>
+
+<p>
+So, by CT, if \(A\) and \(B\) are computable, so is \(A ∩ B\).
+</p>
+</div>
+</li>
+
+
+<li><a id="A-𝒢-program-for-the-union"></a>A 𝒢-program for the union<br />
+<div class="outline-text-5" id="text-A-𝒢-program-for-the-union">
+<p>
+Assume we have macros <code>inᴬ</code> and <code>inᴮ</code> which compute
+whether a given natural is in \(A\) or \(B\) respectively.
+</p>
+
+<p>
+Then this 𝒢-program computes whether its input
+is in \(A ∪ B\).
+</p>
+<div class="org-src-container">
+<pre class="src src-text">     Z &#8592; in&#7468;<span style="color: #00cd68;">(</span>X<span style="color: #00cd68;">)</span>
+     if Z &#8800; 0 goto A
+     goto E
+<span style="color: #00cd68;">[</span>A<span style="color: #00cd68;">]</span>  Z &#8592; in&#7470;<span style="color: #00cd68;">(</span>X<span style="color: #00cd68;">)</span>
+     if Z &#8800; 0 goto B
+     goto E
+<span style="color: #00cd68;">[</span>B<span style="color: #00cd68;">]</span>  Y &#8592; 1
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-Is-/s/comp/-closed-under-complementation?" class="outline-4">
+<h4 id="Is-/s/comp/-closed-under-complementation?"><span class="section-number-4">4.2.2</span> Is <i>s/comp</i> closed under complementation?</h4>
+<div class="outline-text-4" id="text-Is-/s/comp/-closed-under-complementation?">
+<p>
+No. We can show that if it were, it would cause a contradiction
+with the known fact that \(\textit{comp} ⊊ \textit{s/comp}\)
+(i.e., <i>comp</i> is a proper subset of <i>s/comp</i>.) See note 3 on notes page 8-4.
+</p>
+
+<p>
+Suppose that <i>s/comp</i> were closed under complementation.
+That means that for any semicomputable set \(A\),
+\(Aᶜ\) would also be semicomputable
+(using superscript \(c\) to denote complement.)
+</p>
+
+<p>
+But this would mean that every semicomputable \(A\) is
+in fact computable, because we can give the following
+algorithm to compute \(A\).
+The algorithm works in stages. With input <code>x</code>, at each stage \(i\):
+</p>
+<ul class="org-ul">
+<li>Execute the first \(i\) steps of the algorithm to semicompute <code>x</code> ∈ \(A\).</li>
+<li>If it halts and returns <code>true</code>, also return <code>true</code>. Otherwise continue.</li>
+<li>Execute the first \(i\) steps of the algorithm to semicompute <code>x</code> ∈ \(Aᶜ\).</li>
+<li>If it halts and returns <code>true</code>, then return <code>false</code>. Otherwise continue
+with the next stage.</li>
+</ul>
+
+<p>
+There must exist some stage at which one of the algorithms halts
+returning true (since <code>x</code> must either be in \(A\) or \(Aᶜ\), and since
+they are semicomputable, the algorithms for their characteristic predicates
+do eventually halt on inputs in their domain.)
+So this algorithm computes \(A\).
+</p>
+
+<p>
+As stated above though, not every semicomputable set can be computable.
+So we have a contradiction, and <i>s/comp</i> cannot be closed under complementation.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Is-/co-s/comp/-closed-under-complementation?" class="outline-4">
+<h4 id="Is-/co-s/comp/-closed-under-complementation?"><span class="section-number-4">4.2.3</span> Is <i>co-s/comp</i> closed under complementation?</h4>
+<div class="outline-text-4" id="text-Is-/co-s/comp/-closed-under-complementation?">
+<p>
+No.
+</p>
+
+<p>
+Suppose it were, and consider any co-semicomputable set \(A\).
+Then \(Aᶜ\) is also co-semicomputable.
+</p>
+
+<p>
+But by the definition of co-semicomputability,
+</p>
+<ul class="org-ul">
+<li>\(A\) is co-semicomputable iff \(Aᶜ\) is semicomputable, and</li>
+<li>\(Aᶜ\) is co-semicomputable iff \(A\) is semicomputable.</li>
+</ul>
+
+<p>
+And as in the preceding part, we could again
+show that this means any semicomputable set is computable,
+which is not the case.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Is-/comp/-a-subset-of-/co-s/comp/?" class="outline-4">
+<h4 id="Is-/comp/-a-subset-of-/co-s/comp/?"><span class="section-number-4">4.2.4</span> Is <i>comp</i> a subset of <i>co-s/comp</i>?</h4>
+<div class="outline-text-4" id="text-Is-/comp/-a-subset-of-/co-s/comp/?">
+<p>
+Yes; it is clear to see that <i>comp</i> ⊆ <i>co-s/comp</i>,
+since if \(A\) is computable, then \(Aᶜ\) is also computable
+(Corollary 7.2), and then \(Aᶜ\) is clearly also semicomputable
+(see note 2 on page 8-1.)
+</p>
+</div>
+</div>
+
+<div id="outline-container-Is-/comp/-a-/proper/-subset-of-/co-s/comp/?" class="outline-4">
+<h4 id="Is-/comp/-a-/proper/-subset-of-/co-s/comp/?"><span class="section-number-4">4.2.5</span> Is <i>comp</i> a <i>proper</i> subset of <i>co-s/comp</i>?</h4>
+<div class="outline-text-4" id="text-Is-/comp/-a-/proper/-subset-of-/co-s/comp/?">
+<p>
+Yes.
+</p>
+
+<p>
+Consider the set \(\overline{K}\) from Lemma 8.4, page 8-3.
+We know this set is <i>not</i> semicomputable, but its complement \(K\) is.
+</p>
+
+<p>
+Therefore, by the definition of co-semicomputability,
+\(\overline{K}\) is co-semicomputable, but its complement \(K\) is not.
+</p>
+
+<p>
+Since \(\overline{K}\) is not semicomputable and <i>comp</i> ⊂ <i>s/comp</i>,
+we know that \(\overline{K}\) is not computable.
+</p>
+
+<p>
+Therefore, <i>comp</i> ⊊ <i>co-s/comp</i>, with witness \(\overline{K}\).
+</p>
+</div>
+</div>
+
+<div id="outline-container-Is-/s/comp/-a-subset-of-/co-s/comp/?" class="outline-4">
+<h4 id="Is-/s/comp/-a-subset-of-/co-s/comp/?"><span class="section-number-4">4.2.6</span> Is <i>s/comp</i> a subset of <i>co-s/comp</i>?</h4>
+<div class="outline-text-4" id="text-Is-/s/comp/-a-subset-of-/co-s/comp/?">
+<p>
+No. Neither is subset to the other.
+</p>
+
+<p>
+As witnesses, consider again \(K\) and \(\overline{K}\) from section 8
+of the notes.
+</p>
+
+<p>
+\(\overline{K}\) is not semicomputable, but is co-semicomputable,
+so <i>s/comp</i> ⊄ <i>co-s/comp</i>.
+</p>
+
+<p>
+\(K\) is semicomputable, but is not co-semicomputable,
+so <i>co-s/comp</i> ⊄ <i>s/comp</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Is-/co-s/comp/-countable?" class="outline-4">
+<h4 id="Is-/co-s/comp/-countable?"><span class="section-number-4">4.2.7</span> Is <i>co-s/comp</i> countable?</h4>
+<div class="outline-text-4" id="text-Is-/co-s/comp/-countable?">
+<p>
+Yes.
+</p>
+
+<p>
+Recall that <i>s/comp</i> is countable (note 5, page 8-4)
+by the enumeration \(W₀, W₁, …\).
+</p>
+
+<p>
+Then the sequence \(W₀ᶜ, W₁ᶜ, …\) clearly enumerates <i>co-s/comp</i>,
+showing that <i>co-s/comp</i> is also countable.
+</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Mark Armstrong</p>
-     <p class="author">Contact: <a href="mailto:markparmstrong@gmail.com">markparmstrong@gmail.com</a></p>
+     <p class="author">Contact: <a href="mailto:armstmp@mcmaster.ca">armstmp@mcmaster.ca</a></p>
      <p class="date">Original date: </p>
-     <p class="date">Last updated: 2020-10-31 Sat 19:45</p>
+     <p class="date">Last updated: 2020-12-17 Thu 13:39</p>
      <p class="creator">Created using <a href="https://www.gnu.org/software/emacs/">Emacs</a> 27.0.90 (<a href="https://orgmode.org">Org</a> mode 9.4)</p>
      <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

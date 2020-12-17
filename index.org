@@ -106,6 +106,8 @@ This means $g : B ≈ A$, and so $B ≈ A$.
 :CUSTOM_ID: Greatest-common-denomicator-(~gcd~)
 :END:
 
+(Exercise 1(e) from page 5-12 of the notes.)
+
 One approach to defining ~gcd~ is to make use of the
 bounded minimalisation and existential quantifiers.
 #+begin_src text
@@ -118,3 +120,324 @@ Note that the choice of ~x~ as a bound for both quantifiers is arbitrary.
 We can see easily that the GCD of ~x~ and ~y~ must be less than or equal
 to both of them. So we could instead use ~y~, and also ~min(x,y)~.
 
+** COMMENT (~k~'th digit of the) decimal expansion of ~1/n~
+:PROPERTIES:
+:CUSTOM_ID: (~n~'th-digit-of-the)-decimal-expansion-of-~1/k~
+:END:
+
+(Exercise 4 from page 5-13 of the notes.)
+
+To find the ~k~'th digit of the decimal expansion of ~n~,
+we can essentially carry out the process of long division.
+
+Recall the process of “long” division of one integer ~n~ into
+another integer ~m~.
+1. Set the first digit to the integer division of ~n~ into ~m~.
+   - (We skip this digit with our ~d~ function;
+      it will always be unless ~n~ is ~1~.)
+2. Set the first remainder to
+   the remainder of the division of ~m~ into ~n~.
+   - (In our case, where the dividend is 1,
+      this will be 1 unless the divisor is also 1.)
+3. Repeat:
+   1. The next digit is then the integer division of
+      the divisor into the remainder times 10.
+   2. And the next remainder is the remainder of
+      that integer division.
+      
+You likely learned a notation similar to the below for long division.
+#+begin_src text
+    0.1428…
+  —————————————     
+7 | 1.00000000
+
+    1   
+  - 0   
+   ———
+    10   
+  -  7   
+  —————
+     30   
+   - 28   
+   —————
+      20    
+    - 14    
+    —————
+       60
+       …
+#+end_src
+
+So we have the following definition
+using simultaneous primitive recursion.
+#+begin_src text
+d(n,0) = div(1,n)
+r(n,0) = mod(1,n)
+d(n,k+1) = div(r(n,k) * 10, n)
+r(n,k+1) = r(n,k) * 10 - d(n,k) * n
+#+end_src
+
+We can check these definitions.
+#+begin_src text
+d(7,0) = div(1,7) = 0
+r(7,0) = mod(1,7) = 1
+d(7,1) = div(r(7,0) * 10, 7)      = div(1 * 10,7)  = 1
+r(7,1) = r(7,0) * 10 - d(7,0) * 7 = 1 * 10 - 0 * 7 = 10
+d(7,2) = div(r(7,1) * 10, 7)      = div(1 * 10,7)    
+r(7,2) = r(7,1) * 10 - d(7,1) * 1
+#+end_src
+
+# It's also possible to define ~d~ directly.
+# #+begin_src text
+# 
+# #+end_src
+
+* Exam review
+:PROPERTIES:
+:CUSTOM_ID: Exam-review
+:END:
+
+Two problems were discussed during the exam review session;
+they are repeated here with solutions.
+
+** Find an $e$ such that $Wₑ = \{ e \}$
+:PROPERTIES:
+:CUSTOM_ID: Find-an-$e$-such-that-$Wₑ-=-\{-e-\}$
+:END:
+
+Recall from notes page 8-3 that we write $Wₙ$ to denote
+the /halting set/ of the (𝒢-)program with index $n$.
+I.e., $Wₙ = dom(φₙ)$.
+
+So, if we are tasked to find an $e$ such that $Wₑ = \{ e \}$,
+this means we must find $e$ such that $φₑ(x) ↓ ⇔ e = x$.
+
+Conceivably, we could guess values for $e$ until we happen to find one,
+but this is obviously not a feasible approach.
+
+Notice that if we were able to treat ~e~ as an input
+to the computable function, and able to define the function as we want,
+this problem would be quite trivial,
+since we can check equality between numbers.
+
+Thankfully, we can use Kleene's Recursion Theorem (page 13-1)
+to do precisely this; RT tells us that for any binary computable $g$,
+there is an $e$ such that for all $x$,
+#+begin_center
+φₑ(x) ≃ g(x,e)
+#+end_center
+(the Recursion Theorem works for functions of any arity;
+here we use it on a binary function.)
+
+Note that when using the Recursion Theorem, we are free to pick
+fill in any function for $g$; we have complete freedom
+to define the function, so long as it is computable.
+
+Let $f$ be the function such that
+- $f(x,y) = 0$ if $x = y$, and
+- $f(x,y)↑$ otherwise.
+Then by RT, there exists an $e$ such that $φₑ(x) ≃ f(x,e)$,
+i.e.,
+- $φₑ(x) = 0$ if $x = e$, and
+- $φₑ(x)↑$ otherwise.
+From this, we see that $Wₑ = \{ e \}$. So we have found an $e$
+as requested.
+
+** Co-semicomputability
+:PROPERTIES:
+:CUSTOM_ID: Co-semicomputability
+:END:
+
+*** Preamble                                  :ignore:
+
+Consider the following definition and questions.
+#+begin_quote
+A subset of ℕ is said to be /co-semicomputable/ if
+its complement is semicomputable.
+
+Let /comp/, /s/comp/ and /co-s/comp/ be
+the collections of all 𝒢-computable sets
+𝒢-semicomputable sets and 𝒢-co-semicomputable sets
+respectively.
+1. Show that /comp/ is closed under union and intersection.
+2. Is /s/comp/ closed under complementation?
+3. Is /co-s/comp/ closed under complementation?
+4. Is /comp/ a subset of /co-s/comp/?
+5. Is /comp a /proper/ subset of /co-s/comp/?
+6. Is /s/comp/ a subset of /co-s/comp/?
+7. Is /co-s/comp/ countable?
+Justify all of your answers,
+by giving either proofs or counterexamples.
+#+end_quote
+
+*** Show that /comp/ is closed under union and intersection
+:PROPERTIES:
+:CUSTOM_ID: Show-that-/comp/-is-closed-under-union-and-intersection
+:END:
+
+Assume that sets $A$ and $B$ are computable.
+We must show that $A ∪ B$ and $A ∩ B$ are also computable.
+
+We /could/ assume that we have 𝒢-programs to compute $A$ and $B$,
+and then construct 𝒢-programs for $A ∪ B$ and $A ∩ B$.
+
+More easily, we can describe the algorithms, and invoke
+the Church-Turing Thesis to argue that we could construct 𝒢-programs.
+
+**** The union algorithm
+:PROPERTIES:
+:CUSTOM_ID: The-union-algorithm
+:END:
+
+For input $x$:
+- Check if $x ∈ A$. (This check is computable by assumption.)
+  - If so, return true.
+  - Otherwise, continue.
+- Check if $x ∈ B$. (This check is computable by assumption.)
+  - If so, return true.
+  - Otherwise, return false.
+
+So, by CT, if $A$ and $B$ are computable, so is $A ∪ B$.
+
+**** The intersection algorithm
+:PROPERTIES:
+:CUSTOM_ID: The-intersection-algorithm
+:END:
+
+For input $x$:
+- Check if $x ∈ A$. (This check is computable by assumption.)
+  - If not, return false.
+  - Otherwise, continue.
+- Check if $x ∈ B$. (This check is computable by assumption.)
+  - If not, return false.
+  - Otherwise, return true.
+
+So, by CT, if $A$ and $B$ are computable, so is $A ∩ B$.
+
+
+**** A 𝒢-program for the union
+:PROPERTIES:
+:CUSTOM_ID: A-𝒢-program-for-the-union
+:END:
+
+Assume we have macros ~inᴬ~ and ~inᴮ~ which compute
+whether a given natural is in $A$ or $B$ respectively.
+
+Then this 𝒢-program computes whether its input
+is in $A ∪ B$.
+#+begin_src text
+     Z ← inᴬ(X)
+     if Z ≠ 0 goto A
+     goto E
+[A]  Z ← inᴮ(X)
+     if Z ≠ 0 goto B
+     goto E
+[B]  Y ← 1
+#+end_src
+
+*** Is /s/comp/ closed under complementation?
+:PROPERTIES:
+:CUSTOM_ID: Is-/s/comp/-closed-under-complementation?
+:END:
+
+No. We can show that if it were, it would cause a contradiction
+with the known fact that $\textit{comp} ⊊ \textit{s/comp}$
+(i.e., /comp/ is a proper subset of /s/comp/.) See note 3 on notes page 8-4.
+
+Suppose that /s/comp/ were closed under complementation.
+That means that for any semicomputable set $A$,
+$Aᶜ$ would also be semicomputable
+(using superscript $c$ to denote complement.)
+
+But this would mean that every semicomputable $A$ is
+in fact computable, because we can give the following
+algorithm to compute $A$.
+The algorithm works in stages. With input ~x~, at each stage $i$:
+- Execute the first $i$ steps of the algorithm to semicompute ~x~ ∈ $A$.
+- If it halts and returns ~true~, also return ~true~. Otherwise continue.
+- Execute the first $i$ steps of the algorithm to semicompute ~x~ ∈ $Aᶜ$.
+- If it halts and returns ~true~, then return ~false~. Otherwise continue
+  with the next stage.
+
+There must exist some stage at which one of the algorithms halts
+returning true (since ~x~ must either be in $A$ or $Aᶜ$, and since
+they are semicomputable, the algorithms for their characteristic predicates
+do eventually halt on inputs in their domain.)
+So this algorithm computes $A$.
+
+As stated above though, not every semicomputable set can be computable.
+So we have a contradiction, and /s/comp/ cannot be closed under complementation.
+
+*** Is /co-s/comp/ closed under complementation?
+:PROPERTIES:
+:CUSTOM_ID: Is-/co-s/comp/-closed-under-complementation?
+:END:
+
+No.
+
+Suppose it were, and consider any co-semicomputable set $A$.
+Then $Aᶜ$ is also co-semicomputable.
+
+But by the definition of co-semicomputability,
+- $A$ is co-semicomputable iff $Aᶜ$ is semicomputable, and
+- $Aᶜ$ is co-semicomputable iff $A$ is semicomputable.
+
+And as in the preceding part, we could again
+show that this means any semicomputable set is computable,
+which is not the case.
+
+*** Is /comp/ a subset of /co-s/comp/?
+:PROPERTIES:
+:CUSTOM_ID: Is-/comp/-a-subset-of-/co-s/comp/?
+:END:
+
+Yes; it is clear to see that /comp/ ⊆ /co-s/comp/,
+since if $A$ is computable, then $Aᶜ$ is also computable
+(Corollary 7.2), and then $Aᶜ$ is clearly also semicomputable
+(see note 2 on page 8-1.)
+
+*** Is /comp/ a /proper/ subset of /co-s/comp/?
+:PROPERTIES:
+:CUSTOM_ID: Is-/comp/-a-/proper/-subset-of-/co-s/comp/?
+:END:
+
+Yes.
+
+Consider the set $\overline{K}$ from Lemma 8.4, page 8-3.
+We know this set is /not/ semicomputable, but its complement $K$ is.
+
+Therefore, by the definition of co-semicomputability,
+$\overline{K}$ is co-semicomputable, but its complement $K$ is not.
+
+Since $\overline{K}$ is not semicomputable and /comp/ ⊂ /s/comp/,
+we know that $\overline{K}$ is not computable.
+
+Therefore, /comp/ ⊊ /co-s/comp/, with witness $\overline{K}$.
+
+*** Is /s/comp/ a subset of /co-s/comp/?
+:PROPERTIES:
+:CUSTOM_ID: Is-/s/comp/-a-subset-of-/co-s/comp/?
+:END:
+
+No. Neither is subset to the other.
+
+As witnesses, consider again $K$ and $\overline{K}$ from section 8
+of the notes.
+
+$\overline{K}$ is not semicomputable, but is co-semicomputable,
+so /s/comp/ ⊄ /co-s/comp/.
+
+$K$ is semicomputable, but is not co-semicomputable,
+so /co-s/comp/ ⊄ /s/comp/.
+
+*** Is /co-s/comp/ countable?
+:PROPERTIES:
+:CUSTOM_ID: Is-/co-s/comp/-countable?
+:END:
+
+Yes.
+
+Recall that /s/comp/ is countable (note 5, page 8-4)
+by the enumeration $W₀, W₁, …$.
+
+Then the sequence $W₀ᶜ, W₁ᶜ, …$ clearly enumerates /co-s/comp/,
+showing that /co-s/comp/ is also countable.
